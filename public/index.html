@@ -8,57 +8,98 @@
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   </head>
   <body>
-    <main class="container">
-      <header>
-        <h1>🍽️ จองโต๊ะร้านอาหาร</h1>
-        <p class="subtitle">LINE Mini App สำหรับจองโต๊ะล่วงหน้า</p>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-avatar">C</div>
+          <div>
+            <p class="brand-name">Choongman</p>
+          </div>
+        </div>
+        <div class="lang-toggle" aria-label="language toggle">
+          <button type="button" class="lang-btn active" id="lang-th">ไทย</button>
+          <button type="button" class="lang-btn" id="lang-en">Eng</button>
+        </div>
       </header>
 
-      <section id="line-status" class="card muted">กำลังเชื่อมต่อ LINE...</section>
+      <section class="hero-banner">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=1200&q=80" alt="Choongman Chicken" />
+        <div class="hero-overlay">
+          <h1>Choongman Chicken</h1>
+          <p data-i18n="heroSubtitle">ไก่ทอดเกาหลีสูตรพิเศษ กรอบนอกนุ่มใน</p>
+        </div>
+      </section>
+
+      <section id="line-status" class="card muted line-status" data-i18n="lineConnecting">กำลังเชื่อมต่อ LINE...</section>
 
       <section class="card">
-        <h2>ข้อมูลการจอง</h2>
+        <h2 class="form-title" data-i18n="bookTable">จองโต๊ะ</h2>
+
         <form id="booking-form">
           <label>
-            วันที่
-            <input type="date" id="date" name="date" required />
+            <span class="field-title">📍 เลือกสาขา</span>
+            <select id="branch" name="branch">
+              <option value="" data-i18n="branchPlaceholder">เลือกสาขาที่ต้องการ</option>
+              <option value="siam">Siam</option>
+              <option value="ladprao">Ladprao</option>
+              <option value="bangna">Bangna</option>
+            </select>
+          </label>
+
+          <div class="two-column">
+            <label>
+              <span class="field-title">📅 วันที่</span>
+              <input type="date" id="date" name="date" required />
+            </label>
+
+            <label>
+              <span class="field-title">🕒 เวลา</span>
+              <select id="time" name="time" required></select>
+            </label>
+          </div>
+
+          <label>
+            <span class="field-title">👥 จำนวนคน</span>
+            <div class="people-stepper">
+              <button type="button" class="step-btn" id="decrease-people" aria-label="ลดจำนวนคน">−</button>
+              <input type="number" id="people" name="people" min="1" max="20" value="2" required />
+              <button type="button" class="step-btn" id="increase-people" aria-label="เพิ่มจำนวนคน">+</button>
+              <span class="people-unit">ท่าน</span>
+            </div>
           </label>
 
           <label>
-            เวลา
-            <select id="time" name="time" required></select>
-          </label>
-
-          <label>
-            จำนวนคน
-            <input type="number" id="people" name="people" min="1" max="20" value="2" required />
-          </label>
-
-          <label>
-            ชื่อผู้จอง
+            <span class="field-title">ชื่อผู้จอง</span>
             <input type="text" id="name" name="name" placeholder="เช่น สมชาย" required />
           </label>
 
           <label>
-            เบอร์โทร
+            <span class="field-title">เบอร์โทร</span>
             <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxx" required />
           </label>
 
           <label>
-            หมายเหตุ
+            <span class="field-title">หมายเหตุ</span>
             <textarea id="note" name="note" rows="3" placeholder="เช่น ต้องการเก้าอี้เด็ก"></textarea>
           </label>
 
-          <button type="submit" id="submit-btn">ยืนยันการจอง</button>
+          <button type="submit" id="submit-btn"><span data-i18n="next">ถัดไป</span> <span aria-hidden="true">›</span></button>
         </form>
       </section>
 
       <section class="card">
-        <h2>สถานะโต๊ะว่าง</h2>
-        <p id="availability-text">เลือกวันที่และเวลาเพื่อดูสถานะ</p>
+        <h2 data-i18n="availabilityTitle">สถานะโต๊ะว่าง</h2>
+        <p id="availability-text" class="availability" data-i18n="availabilityHint">เลือกวันที่และเวลาเพื่อดูสถานะ</p>
       </section>
 
       <section id="result" class="card hidden"></section>
+
+      <nav class="bottom-nav">
+        <a href="#" class="active" data-i18n="navBooking">จองโต๊ะ</a>
+        <a href="#" data-i18n="navMenu">เมนู</a>
+        <a href="#" data-i18n="navReservations">การจอง</a>
+        <a href="#" data-i18n="navProfile">โปรไฟล์</a>
+      </nav>
     </main>
 
     <script type="module" src="/app.js"></script>

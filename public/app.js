@@ -11,11 +11,59 @@ const submitBtn = document.getElementById('submit-btn');
 const resultBox = document.getElementById('result');
 const availabilityText = document.getElementById('availability-text');
 const lineStatus = document.getElementById('line-status');
+const peopleInput = document.getElementById('people');
+const decreasePeopleBtn = document.getElementById('decrease-people');
+const increasePeopleBtn = document.getElementById('increase-people');
+const langThBtn = document.getElementById('lang-th');
+const langEnBtn = document.getElementById('lang-en');
+const i18nNodes = document.querySelectorAll('[data-i18n]');
+
+const i18n = {
+  th: {
+    heroSubtitle: 'ไก่ทอดเกาหลีสูตรพิเศษ กรอบนอกนุ่มใน',
+    lineConnecting: 'กำลังเชื่อมต่อ LINE...',
+    lineConnected: 'เชื่อมต่อ LINE แล้ว',
+    lineNotConfigured: 'ยังไม่ได้ตั้งค่า LIFF_ID (โหมดทดสอบบนเบราว์เซอร์)',
+    lineFailed: 'เชื่อมต่อ LINE ไม่สำเร็จ',
+    bookTable: 'จองโต๊ะ',
+    branchPlaceholder: 'เลือกสาขาที่ต้องการ',
+    next: 'ถัดไป',
+    availabilityTitle: 'สถานะโต๊ะว่าง',
+    availabilityHint: 'เลือกวันที่และเวลาเพื่อดูสถานะ',
+    availability: 'เวลา {time} • {status} • เหลือ {available} / {total} โต๊ะ',
+    statusAvailable: 'ว่าง',
+    statusFull: 'เต็ม',
+    navBooking: 'จองโต๊ะ',
+    navMenu: 'เมนู',
+    navReservations: 'การจอง',
+    navProfile: 'โปรไฟล์'
+  },
+  en: {
+    heroSubtitle: 'Special Korean fried chicken, crispy outside and juicy inside',
+    lineConnecting: 'Connecting to LINE...',
+    lineConnected: 'Connected to LINE',
+    lineNotConfigured: 'LIFF_ID is not configured (browser test mode)',
+    lineFailed: 'LINE connection failed',
+    bookTable: 'Book a Table',
+    branchPlaceholder: 'Select branch',
+    next: 'Next',
+    availabilityTitle: 'Table Availability',
+    availabilityHint: 'Select date and time to view availability',
+    availability: 'Time {time} • {status} • {available} / {total} tables left',
+    statusAvailable: 'Available',
+    statusFull: 'Full',
+    navBooking: 'Book',
+    navMenu: 'Menu',
+    navReservations: 'Reservations',
+    navProfile: 'Profile'
+  }
+};
 
 const today = new Date();
 const yyyyMmDd = today.toISOString().slice(0, 10);
 dateInput.min = yyyyMmDd;
 dateInput.value = yyyyMmDd;
+state.lang = 'th';
 
 function showResult(message, type = 'success') {
   resultBox.className = `card ${type}`;
@@ -63,12 +111,34 @@ async function updateAvailability() {
   const occupied = bookings.filter((booking) => booking.time === time).length;
   const available = state.config.tableCount - occupied;
 
-  availabilityText.textContent = `เวลา ${time} เหลือ ${available} / ${state.config.tableCount} โต๊ะ`;
+  const status = available > 0 ? t('statusAvailable') : t('statusFull');
+  availabilityText.textContent = t('availability')
+    .replace('{time}', time)
+    .replace('{status}', status)
+    .replace('{available}', String(available))
+    .replace('{total}', String(state.config.tableCount));
+}
+
+function t(key) {
+  return i18n[state.lang][key] || key;
+}
+
+function applyLanguage(lang) {
+  state.lang = lang;
+  for (const node of i18nNodes) {
+    const key = node.dataset.i18n;
+    if (i18n[lang][key]) {
+      node.textContent = i18n[lang][key];
+    }
+  }
+
+  langThBtn.classList.toggle('active', lang === 'th');
+  langEnBtn.classList.toggle('active', lang === 'en');
 }
 
 async function initLine() {
   if (!state.config.liffId) {
-    lineStatus.textContent = 'ยังไม่ได้ตั้งค่า LIFF_ID (โหมดทดสอบบนเบราว์เซอร์)';
+    lineStatus.textContent = t('lineNotConfigured');
     return;
   }
 
@@ -84,9 +154,9 @@ async function initLine() {
     state.lineUserId = profile.userId;
     state.lineDisplayName = profile.displayName;
 
-    lineStatus.textContent = `เชื่อมต่อ LINE แล้ว: ${profile.displayName}`;
+    lineStatus.textContent = `${t('lineConnected')}: ${profile.displayName}`;
   } catch (error) {
-    lineStatus.textContent = `เชื่อมต่อ LINE ไม่สำเร็จ: ${error.message}`;
+    lineStatus.textContent = `${t('lineFailed')}: ${error.message}`;
   }
 }
 
@@ -121,8 +191,26 @@ for (const element of [dateInput, timeInput]) {
   });
 }
 
+function adjustPeople(delta) {
+  const current = Number.parseInt(peopleInput.value, 10) || 1;
+  const next = Math.max(1, Math.min(20, current + delta));
+  peopleInput.value = String(next);
+}
+
+decreasePeopleBtn.addEventListener('click', () => adjustPeople(-1));
+increasePeopleBtn.addEventListener('click', () => adjustPeople(1));
+langThBtn.addEventListener('click', () => {
+  applyLanguage('th');
+  updateAvailability().catch(() => {});
+});
+langEnBtn.addEventListener('click', () => {
+  applyLanguage('en');
+  updateAvailability().catch(() => {});
+});
+
 (async () => {
   try {
+    applyLanguage('th');
     await loadConfig();
     await initLine();
     await updateAvailability();
