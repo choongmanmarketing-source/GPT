@@ -11,6 +11,7 @@ const submitBtn = document.getElementById('submit-btn');
 const resultBox = document.getElementById('result');
 const availabilityText = document.getElementById('availability-text');
 const lineStatus = document.getElementById('line-status');
+const quickPeopleButtons = document.querySelectorAll('.chip[data-people]');
 
 const today = new Date();
 const yyyyMmDd = today.toISOString().slice(0, 10);
@@ -63,7 +64,15 @@ async function updateAvailability() {
   const occupied = bookings.filter((booking) => booking.time === time).length;
   const available = state.config.tableCount - occupied;
 
-  availabilityText.textContent = `เวลา ${time} เหลือ ${available} / ${state.config.tableCount} โต๊ะ`;
+  const status = available > 0 ? 'ว่าง' : 'เต็ม';
+  availabilityText.textContent = `เวลา ${time} (${status}) เหลือ ${available} / ${state.config.tableCount} โต๊ะ`;
+}
+
+function syncPeopleChips() {
+  const value = Number.parseInt(document.getElementById('people').value, 10);
+  for (const chip of quickPeopleButtons) {
+    chip.classList.toggle('active', Number.parseInt(chip.dataset.people, 10) === value);
+  }
 }
 
 async function initLine() {
@@ -121,11 +130,21 @@ for (const element of [dateInput, timeInput]) {
   });
 }
 
+for (const button of quickPeopleButtons) {
+  button.addEventListener('click', () => {
+    document.getElementById('people').value = button.dataset.people;
+    syncPeopleChips();
+  });
+}
+
+document.getElementById('people').addEventListener('input', syncPeopleChips);
+
 (async () => {
   try {
     await loadConfig();
     await initLine();
     await updateAvailability();
+    syncPeopleChips();
   } catch (error) {
     showResult(error.message, 'error');
   }

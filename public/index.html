@@ -9,15 +9,27 @@
   </head>
   <body>
     <main class="container">
-      <header>
-        <h1>🍽️ จองโต๊ะร้านอาหาร</h1>
-        <p class="subtitle">LINE Mini App สำหรับจองโต๊ะล่วงหน้า</p>
+      <header class="hero card">
+        <div>
+          <p class="badge">LINE Mini App</p>
+          <h1>🍽️ จองโต๊ะร้านอาหาร</h1>
+          <p class="subtitle">จองโต๊ะล่วงหน้าได้ในไม่กี่ขั้นตอน พร้อมดูโต๊ะว่างแบบทันที</p>
+        </div>
       </header>
 
       <section id="line-status" class="card muted">กำลังเชื่อมต่อ LINE...</section>
 
       <section class="card">
         <h2>ข้อมูลการจอง</h2>
+        <p class="section-subtitle">กรอกข้อมูลให้ครบเพื่อยืนยันการจองได้เร็วขึ้น</p>
+
+        <div class="quick-people" aria-label="เลือกจำนวนคนอย่างรวดเร็ว">
+          <button type="button" class="chip" data-people="2">2 คน</button>
+          <button type="button" class="chip" data-people="4">4 คน</button>
+          <button type="button" class="chip" data-people="6">6 คน</button>
+          <button type="button" class="chip" data-people="8">8 คน</button>
+        </div>
+
         <form id="booking-form">
           <label>
             วันที่
@@ -55,7 +67,7 @@
 
       <section class="card">
         <h2>สถานะโต๊ะว่าง</h2>
-        <p id="availability-text">เลือกวันที่และเวลาเพื่อดูสถานะ</p>
+        <p id="availability-text" class="availability">เลือกวันที่และเวลาเพื่อดูสถานะ</p>
       </section>
 
       <section id="result" class="card hidden"></section>
