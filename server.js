@@ -11,6 +11,7 @@ const OPEN_HOUR = Number(process.env.OPEN_HOUR || 10);
 const CLOSE_HOUR = Number(process.env.CLOSE_HOUR || 22);
 const TABLE_COUNT = Number(process.env.TABLE_COUNT || 10);
 const SLOT_MINUTES = Number(process.env.SLOT_MINUTES || 60);
+const DEFAULT_LIFF_ID = '2006971316-npxM7dL7';
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,7 +76,7 @@ app.get('/api/config', (_req, res) => {
     tableCount: TABLE_COUNT,
     slotMinutes: SLOT_MINUTES,
     slots: buildSlots(),
-    liffId: process.env.LIFF_ID || ''
+    liffId: process.env.LIFF_ID || DEFAULT_LIFF_ID
   });
 });
 
