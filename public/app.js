@@ -27,6 +27,7 @@ const i18n = {
     lineFailed: 'เชื่อมต่อ LINE ไม่สำเร็จ',
     bookTable: 'จองโต๊ะ',
     branchPlaceholder: 'เลือกสาขาที่ต้องการ',
+    timePlaceholder: 'เลือกเวลา',
     next: 'ถัดไป',
     availabilityTitle: 'สถานะโต๊ะว่าง',
     availabilityHint: 'เลือกวันที่และเวลาเพื่อดูสถานะ',
@@ -46,6 +47,7 @@ const i18n = {
     lineFailed: 'LINE connection failed',
     bookTable: 'Book a Table',
     branchPlaceholder: 'Select branch',
+    timePlaceholder: 'Select time',
     next: 'Next',
     availabilityTitle: 'Table Availability',
     availabilityHint: 'Select date and time to view availability',
@@ -73,6 +75,13 @@ function showResult(message, type = 'success') {
 
 function renderTimeOptions(slots) {
   timeInput.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = t('timePlaceholder');
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  timeInput.appendChild(placeholder);
+
   for (const slot of slots) {
     const option = document.createElement('option');
     option.value = slot;
@@ -96,7 +105,21 @@ async function fetchJson(url, options = {}) {
 }
 
 async function loadConfig() {
-  state.config = await fetchJson('/api/config');
+  try {
+    state.config = await fetchJson('/api/config');
+  } catch {
+    const fallbackSlots = [];
+    for (let hour = 10; hour <= 21; hour += 1) {
+      fallbackSlots.push(`${String(hour).padStart(2, '0')}:00`);
+    }
+
+    state.config = {
+      tableCount: 10,
+      slots: fallbackSlots,
+      liffId: ''
+    };
+  }
+
   renderTimeOptions(state.config.slots);
 }
 
@@ -134,6 +157,14 @@ function applyLanguage(lang) {
 
   langThBtn.classList.toggle('active', lang === 'th');
   langEnBtn.classList.toggle('active', lang === 'en');
+
+  if (state.config?.slots?.length) {
+    const currentTime = timeInput.value;
+    renderTimeOptions(state.config.slots);
+    if (state.config.slots.includes(currentTime)) {
+      timeInput.value = currentTime;
+    }
+  }
 }
 
 async function initLine() {
