@@ -5,18 +5,30 @@
 
 body {
   margin: 0;
-  background: #f6f7fb;
+  background: linear-gradient(180deg, #eef3ff 0%, #f6f7fb 35%, #f8fafc 100%);
   color: #1e2230;
 }
 
 .container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 16px 16px 24px;
 }
 
-header {
+.hero {
   margin: 8px 0 16px;
+  background: linear-gradient(135deg, #11b3ff 0%, #00b900 100%);
+  color: #fff;
+}
+
+.badge {
+  margin: 0 0 8px;
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgb(255 255 255 / 20%);
 }
 
 h1,
@@ -26,7 +38,13 @@ h2 {
 
 .subtitle {
   margin: 0;
+  color: #eaf7ff;
+}
+
+.section-subtitle {
+  margin: -2px 0 14px;
   color: #586174;
+  font-size: 14px;
 }
 
 .card {
@@ -50,6 +68,29 @@ form {
   gap: 12px;
 }
 
+.quick-people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  border: 1px solid #d3dbef;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #f8faff;
+  color: #2d3750;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip.active {
+  border-color: #00b900;
+  color: #00b900;
+  background: #effff0;
+}
+
 label {
   display: grid;
   gap: 6px;
@@ -69,6 +110,15 @@ textarea {
   border: 1px solid #d7dcea;
   border-radius: 8px;
   padding: 10px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #5a89ff;
+  box-shadow: 0 0 0 3px rgb(90 137 255 / 16%);
 }
 
 button {
@@ -79,11 +129,25 @@ button {
   color: white;
   font-weight: 700;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgb(0 185 0 / 24%);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: wait;
+}
+
+.availability {
+  margin: 0;
+  padding: 10px 12px;
+  background: #f7f9ff;
+  border-left: 4px solid #87a2ff;
+  border-radius: 8px;
 }
 
 .success {
@@ -94,4 +158,14 @@ button:disabled {
 .error {
   background: #ffeff0;
   color: #931f2b;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px 12px 20px;
+  }
+
+  .card {
+    padding: 14px;
+  }
 }
