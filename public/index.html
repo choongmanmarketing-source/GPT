@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จองโต๊ะร้านอาหาร - LINE Mini App</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>🍽️ จองโต๊ะร้านอาหาร</h1>
+        <p class="subtitle">LINE Mini App สำหรับจองโต๊ะล่วงหน้า</p>
+      </header>
+
+      <section id="line-status" class="card muted">กำลังเชื่อมต่อ LINE...</section>
+
+      <section class="card">
+        <h2>ข้อมูลการจอง</h2>
+        <form id="booking-form">
+          <label>
+            วันที่
+            <input type="date" id="date" name="date" required />
+          </label>
+
+          <label>
+            เวลา
+            <select id="time" name="time" required></select>
+          </label>
+
+          <label>
+            จำนวนคน
+            <input type="number" id="people" name="people" min="1" max="20" value="2" required />
+          </label>
+
+          <label>
+            ชื่อผู้จอง
+            <input type="text" id="name" name="name" placeholder="เช่น สมชาย" required />
+          </label>
+
+          <label>
+            เบอร์โทร
+            <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxx" required />
+          </label>
+
+          <label>
+            หมายเหตุ
+            <textarea id="note" name="note" rows="3" placeholder="เช่น ต้องการเก้าอี้เด็ก"></textarea>
+          </label>
+
+          <button type="submit" id="submit-btn">ยืนยันการจอง</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>สถานะโต๊ะว่าง</h2>
+        <p id="availability-text">เลือกวันที่และเวลาเพื่อดูสถานะ</p>
+      </section>
+
+      <section id="result" class="card hidden"></section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

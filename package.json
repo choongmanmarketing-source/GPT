@@ -1,0 +1,22 @@
+{
+  "name": "line-miniapp-table-booking",
+  "version": "1.0.0",
+  "description": "LINE Mini App สำหรับจองโต๊ะ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "keywords": [
+    "line",
+    "liff",
+    "mini-app",
+    "booking"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
