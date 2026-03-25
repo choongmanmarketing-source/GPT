@@ -21,14 +21,15 @@ body {
   max-width: 430px;
   margin: 0 auto;
   min-height: 100vh;
-  padding-bottom: 90px;
+  padding-bottom: 88px;
+  background: #f1f1f1;
 }
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 12px 14px;
 }
 
 .brand {
@@ -51,7 +52,7 @@ body {
 .brand-name {
   margin: 0;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .lang-toggle {
@@ -65,10 +66,11 @@ body {
 .lang-btn {
   border: 0;
   border-radius: 999px;
-  padding: 10px 14px;
+  padding: 8px 14px;
   font-weight: 700;
   background: transparent;
   color: #3f393a;
+  cursor: pointer;
 }
 
 .lang-btn.active {
@@ -83,7 +85,7 @@ body {
 
 .hero-banner img {
   width: 100%;
-  height: 220px;
+  height: 210px;
   object-fit: cover;
   display: block;
 }
@@ -98,20 +100,20 @@ body {
 
 h1 {
   margin: 0 0 4px;
-  font-size: 48px;
+  font-size: 22px;
 }
 
 .hero-overlay p {
   margin: 0;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .card {
   background: #fff;
-  border-radius: 20px;
-  padding: 18px;
+  border-radius: 18px;
+  padding: 16px;
   margin: 0 14px 14px;
-  box-shadow: 0 2px 8px rgb(26 24 24 / 8%);
+  box-shadow: 0 1px 6px rgb(26 24 24 / 10%);
 }
 
 .line-status {
@@ -127,26 +129,26 @@ h1 {
 }
 
 .form-title {
-  margin: 0 0 14px;
-  font-size: 34px;
+  margin: 0 0 12px;
+  font-size: 22px;
   position: relative;
-  padding-left: 16px;
+  padding-left: 14px;
 }
 
 .form-title::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 8px;
-  width: 6px;
-  height: 34px;
+  top: 3px;
+  width: 5px;
+  height: 30px;
   border-radius: 999px;
   background: var(--primary);
 }
 
 form {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 label {
@@ -155,7 +157,7 @@ label {
 }
 
 .field-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -178,9 +180,10 @@ textarea {
   width: 100%;
   border: 1px solid #ddd6d8;
   background: #fff;
-  border-radius: 16px;
-  padding: 13px 14px;
+  border-radius: 14px;
+  padding: 12px 13px;
   color: #2e2b2c;
+  font-size: 16px;
 }
 
 input:focus,
@@ -194,43 +197,49 @@ textarea:focus {
 .people-stepper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .step-btn {
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   border: 1px solid #dfd9db;
   border-radius: 50%;
   background: #fff;
   color: #191617;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1;
+  cursor: pointer;
 }
 
 #people {
-  width: 72px;
+  width: 70px;
   text-align: center;
   font-weight: 700;
   border: 0;
   background: transparent;
-  font-size: 46px;
+  font-size: 28px;
   padding: 0;
 }
 
 .people-unit {
   color: #676062;
-  font-size: 31px;
+  font-size: 20px;
 }
 
 #submit-btn {
   border: 0;
   border-radius: 16px;
-  padding: 14px;
+  padding: 12px;
   background: var(--primary);
   color: #fff;
   font-weight: 700;
-  font-size: 31px;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
 }
 
 #submit-btn:disabled {
@@ -264,7 +273,7 @@ textarea:focus {
   border-top: 1px solid #e3dddf;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: 10px 8px 14px;
+  padding: 9px 8px 12px;
 }
 
 .bottom-nav a {
@@ -281,7 +290,7 @@ textarea:focus {
 
 @media (max-width: 390px) {
   .form-title {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .two-column {
