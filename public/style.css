@@ -13,29 +13,11 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
 }
 
 .app-shell {
   max-width: 430px;
   margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 88px;
-  background: #f1f1f1;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .brand-avatar {
@@ -51,61 +33,6 @@ body {
 
 .brand-name {
   margin: 0;
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.lang-toggle {
-  display: flex;
-  gap: 8px;
-  background: #ece8e8;
-  border-radius: 999px;
-  padding: 4px;
-}
-
-.lang-btn {
-  border: 0;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-weight: 700;
-  background: transparent;
-  color: #3f393a;
-  cursor: pointer;
-}
-
-.lang-btn.active {
-  background: var(--primary);
-  color: #fff;
-}
-
-.hero-banner {
-  position: relative;
-  margin-bottom: 14px;
-}
-
-.hero-banner img {
-  width: 100%;
-  height: 210px;
-  object-fit: cover;
-  display: block;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: auto 0 0;
-  padding: 18px 20px;
-  background: linear-gradient(180deg, rgb(0 0 0 / 8%) 0%, rgb(0 0 0 / 62%) 100%);
-  color: #fff;
-}
-
-h1 {
-  margin: 0 0 4px;
-  font-size: 22px;
-}
-
-.hero-overlay p {
-  margin: 0;
-  font-size: 15px;
 }
 
 .card {
@@ -151,6 +78,29 @@ form {
   gap: 12px;
 }
 
+.quick-people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  border: 1px solid #d3dbef;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #f8faff;
+  color: #2d3750;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip.active {
+  border-color: #00b900;
+  color: #00b900;
+  background: #effff0;
+}
+
 label {
   display: grid;
   gap: 8px;
@@ -177,13 +127,6 @@ button {
 input,
 select,
 textarea {
-  width: 100%;
-  border: 1px solid #ddd6d8;
-  background: #fff;
-  border-radius: 14px;
-  padding: 12px 13px;
-  color: #2e2b2c;
-  font-size: 16px;
 }
 
 input:focus,
@@ -240,6 +183,12 @@ textarea:focus {
   justify-content: center;
   gap: 8px;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgb(0 185 0 / 24%);
 }
 
 #submit-btn:disabled {
@@ -253,6 +202,14 @@ textarea:focus {
   padding: 11px 13px;
 }
 
+.availability {
+  margin: 0;
+  padding: 10px 12px;
+  background: #f7f9ff;
+  border-left: 4px solid #87a2ff;
+  border-radius: 8px;
+}
+
 .success {
   background: #eefcef;
   color: #125c21;
@@ -262,38 +219,5 @@ textarea:focus {
   background: #ffeff0;
   color: #931f2b;
 }
-
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: min(430px, 100%);
-  background: #fff;
-  border-top: 1px solid #e3dddf;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 9px 8px 12px;
-}
-
-.bottom-nav a {
-  text-align: center;
-  text-decoration: none;
-  color: #6a6365;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.bottom-nav a.active {
-  color: var(--primary);
-}
-
-@media (max-width: 390px) {
-  .form-title {
-    font-size: 20px;
-  }
-
-  .two-column {
-    grid-template-columns: 1fr;
   }
 }
