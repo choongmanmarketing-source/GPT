@@ -11,6 +11,7 @@ const submitBtn = document.getElementById('submit-btn');
 const resultBox = document.getElementById('result');
 const availabilityText = document.getElementById('availability-text');
 const lineStatus = document.getElementById('line-status');
+const lineConnectBtn = document.getElementById('line-connect-btn');
 const peopleInput = document.getElementById('people');
 const decreasePeopleBtn = document.getElementById('decrease-people');
 const increasePeopleBtn = document.getElementById('increase-people');
@@ -22,7 +23,9 @@ const i18n = {
   th: {
     heroSubtitle: 'ไก่ทอดเกาหลีสูตรพิเศษ กรอบนอกนุ่มใน',
     lineConnecting: 'กำลังเชื่อมต่อ LINE...',
+    lineConnectAction: 'เชื่อมต่อ LINE',
     lineConnected: 'เชื่อมต่อ LINE แล้ว',
+    lineLoginRequired: 'กรุณาเข้าสู่ระบบ LINE เพื่อใช้งานต่อ',
     lineNotConfigured: 'ยังไม่ได้ตั้งค่า LIFF_ID (โหมดทดสอบบนเบราว์เซอร์)',
     lineFailed: 'เชื่อมต่อ LINE ไม่สำเร็จ',
     bookTable: 'จองโต๊ะ',
@@ -42,7 +45,9 @@ const i18n = {
   en: {
     heroSubtitle: 'Special Korean fried chicken, crispy outside and juicy inside',
     lineConnecting: 'Connecting to LINE...',
+    lineConnectAction: 'Connect LINE',
     lineConnected: 'Connected to LINE',
+    lineLoginRequired: 'Please log in with LINE to continue',
     lineNotConfigured: 'LIFF_ID is not configured (browser test mode)',
     lineFailed: 'LINE connection failed',
     bookTable: 'Book a Table',
@@ -168,6 +173,13 @@ function applyLanguage(lang) {
 }
 
 async function initLine() {
+  lineConnectBtn.classList.add('hidden');
+
+  if (typeof liff === 'undefined') {
+    lineStatus.textContent = `${t('lineFailed')}: LIFF SDK not found`;
+    return;
+  }
+
   if (!state.config.liffId) {
     lineStatus.textContent = t('lineNotConfigured');
     return;
@@ -177,7 +189,8 @@ async function initLine() {
     await liff.init({ liffId: state.config.liffId });
 
     if (!liff.isLoggedIn()) {
-      liff.login();
+      lineStatus.textContent = t('lineLoginRequired');
+      lineConnectBtn.classList.remove('hidden');
       return;
     }
 
@@ -237,6 +250,11 @@ langThBtn.addEventListener('click', () => {
 langEnBtn.addEventListener('click', () => {
   applyLanguage('en');
   updateAvailability().catch(() => {});
+});
+lineConnectBtn.addEventListener('click', () => {
+  if (typeof liff !== 'undefined') {
+    liff.login({ redirectUri: window.location.href });
+  }
 });
 
 (async () => {
