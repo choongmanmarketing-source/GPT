@@ -11,6 +11,9 @@ const submitBtn = document.getElementById('submit-btn');
 const resultBox = document.getElementById('result');
 const availabilityText = document.getElementById('availability-text');
 const lineStatus = document.getElementById('line-status');
+const peopleInput = document.getElementById('people');
+const decreasePeopleBtn = document.getElementById('decrease-people');
+const increasePeopleBtn = document.getElementById('increase-people');
 
 const today = new Date();
 const yyyyMmDd = today.toISOString().slice(0, 10);
@@ -63,7 +66,8 @@ async function updateAvailability() {
   const occupied = bookings.filter((booking) => booking.time === time).length;
   const available = state.config.tableCount - occupied;
 
-  availabilityText.textContent = `เวลา ${time} เหลือ ${available} / ${state.config.tableCount} โต๊ะ`;
+  const status = available > 0 ? 'ว่าง' : 'เต็ม';
+  availabilityText.textContent = `เวลา ${time} • ${status} • เหลือ ${available} / ${state.config.tableCount} โต๊ะ`;
 }
 
 async function initLine() {
@@ -120,6 +124,15 @@ for (const element of [dateInput, timeInput]) {
     });
   });
 }
+
+function adjustPeople(delta) {
+  const current = Number.parseInt(peopleInput.value, 10) || 1;
+  const next = Math.max(1, Math.min(20, current + delta));
+  peopleInput.value = String(next);
+}
+
+decreasePeopleBtn.addEventListener('click', () => adjustPeople(-1));
+increasePeopleBtn.addEventListener('click', () => adjustPeople(1));
 
 (async () => {
   try {
